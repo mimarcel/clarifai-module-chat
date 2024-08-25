@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 
 from clarifai.client.auth import create_stub
