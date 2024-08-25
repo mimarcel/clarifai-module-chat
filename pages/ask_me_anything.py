@@ -16,12 +16,14 @@ user_app = User(user_id=user_app_id.user_id).app(app_id=user_app_id.app_id)
 
 st.title("Ask Me Anything")
 
-all_workflows = user_app.list_workflows()
-all_workflow_ids = []
-for workflow in all_workflows:
-    all_workflow_ids.append(workflow.id)
+workflow_id = os.environ['CLARIFAI_WORKFLOW_ID']
+if not workflow_id:
+    all_workflows = user_app.list_workflows()
+    all_workflow_ids = []
+    for workflow in all_workflows:
+        all_workflow_ids.append(workflow.id)
+    workflow_id = st.selectbox("Assistant", all_workflow_ids)
 
-workflow_id = st.selectbox("Assistant", all_workflow_ids)
 detail = st.checkbox("Detail Answers",
                      help="Request the assistant to provide more details when providing answers",
                      value=True)
