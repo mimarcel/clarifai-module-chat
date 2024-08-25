@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+import streamlit.components.v1 as components
 
 from clarifai.client.auth import create_stub
 from clarifai.client.auth.helper import ClarifaiAuthHelper
@@ -46,3 +47,14 @@ if prompt := st.chat_input("Ask something"):
             answer = answer.raw
     messages.chat_message("assistant").write(answer)
 
+components.html(
+    f"""
+    <script>
+        var texts = window.parent.document.querySelectorAll("textarea");
+        for (var i = 0; i < texts.length; ++i) {{
+            texts[i].focus();
+        }}
+    </script>
+    """,
+    height=0,
+)
