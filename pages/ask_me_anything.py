@@ -51,8 +51,16 @@ components.html(
     f"""
     <script>
         var texts = window.parent.document.querySelectorAll("textarea");
-        for (var i = 0; i < texts.length; ++i) {{
+        for (var i = 0; i < texts.length; i++) {{
             texts[i].focus();
+        }}
+    </script>
+    <script>
+        var alerts = window.parent.document.querySelectorAll(".stAlert");
+        for (var i = 0; i < alerts.length; i++) {{
+            if (alerts[i].innerHTML.includes("experimental_get_query_params")) {{
+                alerts[i].style.display = 'none';
+            }}
         }}
     </script>
     """,
