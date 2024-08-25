@@ -30,7 +30,7 @@ detail = st.checkbox("Detail Answers",
                      help="Request the assistant to provide more details when providing answers",
                      value=True)
 
-messages = st.container(height=200)
+messages = st.container(height=300)
 if prompt := st.chat_input("Ask something"):
     messages.chat_message("user").write(prompt)
     if detail:
