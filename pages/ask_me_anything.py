@@ -18,7 +18,7 @@ user_app = User(user_id=user_app_id.user_id).app(app_id=user_app_id.app_id)
 
 st.title("Ask Me Anything")
 
-workflow_id = os.environ['CLARIFAI_WORKFLOW_ID']
+workflow_id = os.environ.get('CLARIFAI_WORKFLOW_ID', '')
 if not workflow_id:
     all_workflows = user_app.list_workflows()
     all_workflow_ids = []
@@ -33,8 +33,9 @@ detail = st.checkbox("Detail Answers",
 messages = st.container(height=300)
 if prompt := st.chat_input("Ask something"):
     messages.chat_message("user").write(prompt)
+    prompt = os.environ.get('CLARIFAI_PROMPT_PREFIX', '') + prompt
     if detail:
-        prompt += "\nPlease provide more details when providing answer."
+        prompt = "Please provide more details when providing answer.\n" + prompt
     with st.spinner(text="Predicting..."):
         answer_response = user_app.workflow(workflow_id).predict_by_bytes(
             input_bytes=bytes(prompt, 'utf-8'),
